@@ -36,20 +36,3 @@
     {:else}
         <p>Loading SMART on Fhir context...</p>    
     {/if}
-
-
-<style>
-    p {
-        font-size: 12px;
-    }    
-    ul {
-        margin: 0;
-        padding: 0;
-    }
-    li {
-        margin: 1px;
-        display: inline-block;
-        padding: 0 20px 0 0;        
-        font-size: 12px;
-    }
-</style>
