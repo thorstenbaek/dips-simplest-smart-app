@@ -1,8 +1,7 @@
 <script>
-    import { user, patient, encounter, resource } from '../SmartOnFhirStore.js';
+    import { fhir, user, patient, encounter, resource } from '../SmartOnFhirStore.js';
 </script>
-
-    {#if $user != null}
+    {#if $fhir != null}    
         {#if $user != null}           
             <h3>
                 User: 
@@ -34,5 +33,7 @@
             </h3>            
         {/if}    
     {:else}
-        <p>Loading SMART on Fhir context...</p>    
+        Loading FHIR data...
     {/if}
+    
+    

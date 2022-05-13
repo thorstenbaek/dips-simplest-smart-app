@@ -48,11 +48,14 @@ export const resource = derived(
 
 Smart.ready()
     .then(client => {
+        console.log(client);
         var newContext = {
             client: client,
             error: null
         };
-        fhir.set(newContext)})
+        fhir.set(newContext);        
+        })
+        
     .catch(error => {
         var newContext = {
             client: null,
