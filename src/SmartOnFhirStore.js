@@ -1,13 +1,18 @@
 import { writable, derived } from "svelte/store";
 import { oauth2 as Smart } from 'fhirclient';
+import { subscription_key } from './subscription';
+
+
 
 export const fhir = writable(null);
 export const user = derived(
     fhir, 
     ($fhir, set) => {
-        if ($fhir != null && $fhir.client != null)
+        if ($fhir != null && $fhir.client != null && $fhir.client.user.id != null)
         {
-            $fhir.client.user.read().then(u => set(u));
+            $fhir.client.user.read({
+                 headers: {'dips-subscription-key': subscription_key}
+            }).then(u => set(u));
         }
    });
 
@@ -16,7 +21,9 @@ export const patient = derived(
     ($fhir, set) => {
         if ($fhir != null && $fhir.client != null)
         {
-            $fhir.client.patient.read().then(p => set(p));            
+            $fhir.client.patient.read({
+                headers: {'dips-subscription-key': subscription_key}
+            }).then(p => set(p));            
         }
     }
 );
@@ -24,9 +31,11 @@ export const patient = derived(
 export const encounter = derived(
     fhir,
     ($fhir, set) => {
-        if ($fhir != null && $fhir.client != null)
+        if ($fhir != null && $fhir.client != null && $fhir.client.encounter.id != null)
         {
-            $fhir.client.encounter.read().then(e => set(e));
+            $fhir.client.encounter.read({
+                headers: {'dips-subscription-key': subscription_key}
+            }).then(e => set(e));
         }
     }
 )
@@ -34,7 +43,7 @@ export const encounter = derived(
 export const resource = derived(
     fhir, 
     ($fhir, set) => {
-        if ($fhir != null && $fhir.client != null)
+        if ($fhir != null && $fhir.client != null && $fhir.client.resource != null)
         {
             var resourceId = $fhir.client.getState("tokenResponse.resource");
             $fhir.client.request(resourceId).then(
